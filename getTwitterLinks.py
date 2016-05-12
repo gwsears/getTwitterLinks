@@ -5,18 +5,33 @@
 """
 
 from twitter import Twitter, OAuth
+import re
 
 #   Set Access tokens here.
-AccessToken = '4440695914-mL3peFV4ifwF4P5B0rdleJxVwsKcJHuNmeRKB1k'
-AccessTokenSecret = 'mr6NqYZXTSPzmqAjF3LgqFadFY0SWElXDctog1G1FwDSA'
-ConsumerKey = 'WzDrJzcemyo3Jx0uYOBPflPNB'
-ConsumerSecret = 'v6zAcsBKWeQO8fZ08AAbukDn5R8E8BcTTViI5Iq7kOGKAfXtO3'
+AccessToken = 'Your Token Here'
+AccessTokenSecret = 'Your token here'
+ConsumerKey = 'your token here'
+ConsumerSecret = 'your token here'
 
 def getTweets(account,tweets):
     # Gets a number of status updates for a particular account.
     # account is the screen name you want, and tweets is the number of updates.
     t = Twitter(auth=OAuth(AccessToken,AccessTokenSecret,ConsumerKey,ConsumerSecret))
     pythonStatuses = t.statuses.user_timeline(screen_name=account, count=tweets)
-    print(pythonStatuses)
+    #print("------pythonStatuses------")
+    #print(pythonStatuses)
+    return(pythonStatuses)
 
-getTweets('engadget',5)
+tweetsGot = getTweets('timoreilly',30)
+
+print(type(tweetsGot))
+
+for index in range(len(tweetsGot)):
+    print(index)
+    print(tweetsGot[index]['text'])
+    #print(re.search("(?P<url>https?://[^\s]+)", tweetsGot[index]['text']).group("url"))
+
+print("***********Get the URLs**********")
+for index in range(len(tweetsGot)):
+    print(tweetsGot[index]['text'])
+    print(re.search("(?P<url>https?://[^\s]+)", tweetsGot[index]['text']).group("url"))
