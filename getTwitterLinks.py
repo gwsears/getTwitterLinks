@@ -1,9 +1,12 @@
 """
     This is a simple application to grab the links to various articles that someone has posted on Twitter.
     It is based on examples from Web Scraping with Python by Ryan Mitchell from O'Reilly Press.
-    Gerald Sears 5/12/16
+    This program requires the twitter api which requires you to register an app.
+    You can get a Twitter screen name at www.twitter.com and register the app at https://apps.twitter.com/app/
+    Gerald Sears 5/13/16
 """
 
+# Using Twitter Tools from http://mike.verdone.ca/twitter/#downloads
 from twitter import Twitter, OAuth
 import re
 
@@ -18,8 +21,6 @@ def getTweets(account,tweets):
     # account is the screen name you want, and tweets is the number of updates.
     t = Twitter(auth=OAuth(AccessToken,AccessTokenSecret,ConsumerKey,ConsumerSecret))
     pythonStatuses = t.statuses.user_timeline(screen_name=account, count=tweets)
-    #print("------pythonStatuses------")
-    #print(pythonStatuses)
     return(pythonStatuses)
 
 tweetsGot = getTweets('timoreilly',30)
