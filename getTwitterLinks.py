@@ -9,9 +9,9 @@ import re
 
 #   Set Access tokens here.
 AccessToken = 'Your Token Here'
-AccessTokenSecret = 'Your token here'
-ConsumerKey = 'your token here'
-ConsumerSecret = 'your token here'
+AccessTokenSecret = 'Your Secret Here'
+ConsumerKey = 'Your Key Here'
+ConsumerSecret = 'Your Secret Here'
 
 def getTweets(account,tweets):
     # Gets a number of status updates for a particular account.
@@ -31,7 +31,13 @@ for index in range(len(tweetsGot)):
     print(tweetsGot[index]['text'])
     #print(re.search("(?P<url>https?://[^\s]+)", tweetsGot[index]['text']).group("url"))
 
-print("***********Get the URLs**********")
-for index in range(len(tweetsGot)):
-    print(tweetsGot[index]['text'])
-    print(re.search("(?P<url>https?://[^\s]+)", tweetsGot[index]['text']).group("url"))
+def getURLs(tweetsGot):
+    for index in range(len(tweetsGot)):
+        print(tweetsGot[index]['text'])
+        search = re.search("(?P<url>https?://[^\s]+)", tweetsGot[index]['text'])
+        if search == None:
+            print("No URLs Found.")
+        else:
+            print("Found: " + re.search("(?P<url>https?://[^\s]+)", tweetsGot[index]['text']).group("url"))
+
+getURLs(tweetsGot)
