@@ -7,6 +7,7 @@
 """
 # TODO: Add cli interface to program.
 # TODO: Add exception/error handling.
+# TODO: Add export urls to file, perhaps cvs.
 
 # Using Twitter Tools from http://mike.verdone.ca/twitter/#downloads
 from twitter import Twitter, OAuth
@@ -34,6 +35,7 @@ def getTweets(account,tweets):
 def getURLs(tweetsGot):
     # Searches each tweet for embedded URLs.  At the moment this only picks up the first URL.
     # TODO: Add URL checking.
+    # TODO: Figure out if there is a better way to pull URLs & if I'm getting the whole URL.
     listURLs = []  # entered as [{'text':'tweet text', 'urlsFound':Boolean, urls:['URL1', 'URL2']}]
     for index in range(len(tweetsGot)):
         #print(tweetsGot[index]['text'])
