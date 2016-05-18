@@ -17,14 +17,14 @@ from twitter import Twitter, OAuth
 import re
 
 #   Set Access tokens here. Remember to put them in ''s.
-AccessToken = 'Your Token Here'
-AccessTokenSecret = 'Your Secret Here'
-ConsumerKey = 'Your Key Here'
-ConsumerSecret = 'Your Secret Here'
+AccessToken = '4440695914-mL3peFV4ifwF4P5B0rdleJxVwsKcJHuNmeRKB1k'
+AccessTokenSecret = 'mr6NqYZXTSPzmqAjF3LgqFadFY0SWElXDctog1G1FwDSA'
+ConsumerKey = 'hFKSSKGxO4yY14aPGPYObdBq8'
+ConsumerSecret = '5Yn1xYyNPcgamK2VOPMHRUOmytWA2E9gXEPoI0SsNATQ4TRD2z'
 
 #  Target settings
 accountName = 'geraldwsears'
-numbToGet = 3
+numbToGet = 200 # 200 is upper limit.
 
 def getTweets(account,tweets):
     # Gets a number of status updates for a particular account.
@@ -58,10 +58,18 @@ def getEmails(tweetsGot):
     listEmails = [] # [{'text':'tweet text','emailsFound':Boolean,emails:[emaila,emailb...]}]
     test = []
     for index in range(len(tweetsGot)):
+        print(index)
         search = re.findall("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}",tweetsGot[index]['text'])
-        print("This search for index" + str(index))
-        print(search)
         if search == test:
+            # Checking for terms that might mean an email is in the tweet but formatted abnormally.
+            # TODO: Add switch to turn the secondary search on/off.
+            secondSearch = re.findall("email",tweetsGot[index]['text'])
+            thirdSearch = re.search("contact_me",tweetsGot[index]['text'])
+            if thirdSearch != None:
+                secondSearch.append(thirdSearch)
+            # TODO: Add code to append this to listEmails.
+            print(secondSearch)
+
             listEmails.append({'text': tweetsGot[index]['text']})
             listEmails[index]['emailsFound'] = False
         else:
@@ -74,13 +82,13 @@ def getEmails(tweetsGot):
 tweetsGot = getTweets(accountName,numbToGet)
 emailsGot = getEmails(tweetsGot)
 # This is a check on data being collected with the URLs being pulled by our regular expression.
-print("* * * * Here's the URLs pulled with each tweet. * * * *")
+# print("* * * * Here's the URLs pulled with each tweet. * * * *")
 print(emailsGot)
 
 # This is a printout closer to something useable.
 for index in range(len(emailsGot)):
-    print('This tweet: ' + emailsGot[index]['text'])
     if emailsGot[index]['emailsFound'] == True:
+        print('This tweet: ' + emailsGot[index]['text'])
         print('  has the following emails: ' + str(emailsGot[index]['emails']))
-    else:
-        print('  has no emails.')
+    #else:
+        #print('  has no emails.')
